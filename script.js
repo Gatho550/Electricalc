@@ -106,10 +106,21 @@ tabs.forEach(tab => {
 // Mostrar la primera pestaña por defecto
 document.getElementById("recomendaciones").style.display = "block";
 
-// --- Accordion de conceptos ---
+// --- Accordion principal ---
 const acc = document.getElementsByClassName("accordion-btn");
 for (let i = 0; i < acc.length; i++) {
   acc[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    const panel = this.nextElementSibling;
+    panel.style.display = (panel.style.display === "block") ? "none" : "block";
+  });
+}
+
+// --- Sub-accordion (nivel árbol) ---
+const subAcc = document.getElementsByClassName("sub");
+for (let i = 0; i < subAcc.length; i++) {
+  subAcc[i].addEventListener("click", function(e) {
+    e.stopPropagation(); // evita que se cierre el nivel superior
     this.classList.toggle("active");
     const panel = this.nextElementSibling;
     panel.style.display = (panel.style.display === "block") ? "none" : "block";
