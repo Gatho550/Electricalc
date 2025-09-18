@@ -32,39 +32,22 @@ function calcularCaida() {
     document.getElementById("salida").innerText = `Voltaje de salida: ${voltajeSalida.toFixed(4)} V`;
 }
 
-// ----- Recomendación -----
-function recomendarCalibre() {
-    let carga = parseFloat(document.getElementById("carga").value);
-    let voltaje = parseFloat(document.getElementById("voltajeRec").value);
-    let distancia = parseFloat(document.getElementById("distancia").value);
-
-    const resistividades = { "Cobre":1.68e-8, "Aluminio":2.65e-8 };
-    const areasSeccion = { "20":0.518, "18":0.823, "16":1.31, "14":2.08, "12":3.31, "10":5.26, "8":8.37, "6":13.3, "4":21.2, "2":33.6, "1":42.4, "0":53.5, "00":67.4, "000":85.0, "0000":107 };
-    const caidaMax = 0.03 * voltaje;
-
-    let recomendaciones = {};
-
-    for (let mat in resistividades) {
-        let rho = resistividades[mat]*1e6;
-        for (let c in areasSeccion) {
-            let r = rho*(distancia/areasSeccion[c]);
-            if(carga*r <= caidaMax) { recomendaciones[mat]=c; break; }
-        }
+ const caidaMax = 0.03 * voltajeEntrada;
+  let recomendaciones = [];
+  for (let [c, a] of Object.entries(areasSeccion)) {
+    let r = rho * (longitud / a);
+    if (fase === "Bifásico") r *= 2;
+    else if (fase === "Trifásico") r *= 3;
+    if (corriente * r <= caidaMax) {
+      recomendaciones.push(c);
     }
+  }
 
-    document.getElementById("recomendacionCobre").innerText = recomendaciones["Cobre"] ? `Cobre: ${recomendaciones["Cobre"]} AWG` : "No se encontró calibre adecuado para Cobre.";
-    document.getElementById("recomendacionAluminio").innerText = recomendaciones["Aluminio"] ? `Aluminio: ${recomendaciones["Aluminio"]} AWG` : "No se encontró calibre adecuado para Aluminio.";
-}
-
-// ----- Panel de conceptos -----
-function mostrarConcepto(id) {
-    const subindices = document.querySelectorAll(".subindice");
-    subindices.forEach(s => s.style.display = "none");
-    document.getElementById(id).style.display = "block";
-}
-
-function cargarContenido(texto) {
-    document.getElementById("contenido").innerText = texto;
+  if (recomendaciones.length > 0) {
+    document.getElementById("recomendacion-principal").innerText = `✅ Calibres recomendados: ${recomendaciones.join(", ")} AWG`;
+  } else {
+    document.getElementById("recomendacion-principal").innerText = "⚠ Ningún calibre cumple con la caída máxima";
+  }
 }
 
 // Accordion para conceptos
@@ -74,3 +57,20 @@ document.querySelectorAll(".accordion-btn").forEach(btn => {
     panel.style.display = panel.style.display === "block" ? "none" : "block";
   });
 });
+
+// Tabs navegación
+const tabs = document.querySelectorAll(".tab-btn");
+const sections = document.querySelectorAll(".tab-section");
+
+tabs.forEach(tab => {
+  tab.addEventListener("click", () => {
+    tabs.forEach(t => t.classList.remove("active"));
+    tab.classList.add("active");
+
+    sections.forEach(sec => sec.style.display = "none");
+    document.getElementById(tab.dataset.tab).style.display = "block";
+  });
+});
+
+// Mostrar la primera pestaña por defecto
+document.getElementById("recomendaciones").style.display = "block";
