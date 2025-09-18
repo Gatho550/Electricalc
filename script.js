@@ -60,8 +60,8 @@ function calcularCaida() {
     return;
   }
 
-  let rho = resistividades[material] * 1e6; 
-  let area = areasSeccion[calibre];
+  let rho = resistividades[material];
+  let area = areasSeccion[calibre] * 1e-6; // mm² a m²
   let R = rho * (longitud / area);
 
   if (fase === "Bifásico") R *= 2;
@@ -75,8 +75,11 @@ function calcularCaida() {
 
   const caidaMax = 0.03 * voltajeEntrada;
   let recomendacion = "";
-  for (let [c, a] of Object.entries(areasSeccion)) {
-    let r = rho * (longitud / a);
+  // Ordenar calibres de menor a mayor
+  let calibres = Object.entries(areasSeccion).sort((a,b) => a[1]-b[1]);
+  for (let [c, a_mm2] of calibres) {
+    let A = a_mm2 * 1e-6;
+    let r = rho * (longitud / A);
     if (fase === "Bifásico") r *= 2;
     else if (fase === "Trifásico") r *= 3;
     if (corriente * r <= caidaMax) {
