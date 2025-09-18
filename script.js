@@ -115,3 +115,58 @@ for (let i = 0; i < acc.length; i++) {
     panel.style.display = (panel.style.display === "block") ? "none" : "block";
   });
 }
+
+// --- Sub-accordion (nivel árbol) ---
+const subAcc = document.getElementsByClassName("sub");
+for (let i = 0; i < subAcc.length; i++) {
+  subAcc[i].addEventListener("click", function(e) {
+    e.stopPropagation(); // evita que se cierre el nivel superior
+    this.classList.toggle("active");
+    const panel = this.nextElementSibling;
+    panel.style.display = (panel.style.display === "block") ? "none" : "block";
+  });
+}
+
+// --- Modal para mostrar contenido detallado ---
+const modal = document.createElement("div");
+modal.id = "concept-modal";
+modal.style.position = "fixed";
+modal.style.top = "0";
+modal.style.left = "0";
+modal.style.width = "100%";
+modal.style.height = "100%";
+modal.style.background = "rgba(0,0,0,0.8)";
+modal.style.color = "#fff";
+modal.style.display = "none";
+modal.style.justifyContent = "center";
+modal.style.alignItems = "center";
+modal.style.padding = "20px";
+modal.style.overflowY = "auto";
+modal.style.zIndex = "1000";
+
+const modalContent = document.createElement("div");
+modalContent.style.background = "#1e1e1e";
+modalContent.style.borderRadius = "12px";
+modalContent.style.padding = "20px";
+modalContent.style.maxWidth = "600px";
+modalContent.style.width = "90%";
+modal.appendChild(modalContent);
+
+const closeBtn = document.createElement("button");
+closeBtn.innerText = "Cerrar";
+closeBtn.style.marginTop = "10px";
+closeBtn.onclick = () => { modal.style.display = "none"; };
+modalContent.appendChild(closeBtn);
+
+document.body.appendChild(modal);
+
+// Abrir modal al hacer click en un sub-accordion
+const subPanels = document.querySelectorAll(".sub-panel p");
+subPanels.forEach(p => {
+  p.style.cursor = "pointer";
+  p.addEventListener("click", function(e){
+    modalContent.innerHTML = `<p>${this.innerText}</p>`;
+    modalContent.appendChild(closeBtn);
+    modal.style.display = "flex";
+  });
+});
