@@ -172,3 +172,17 @@ button:hover {
     font-size: 1rem;
   }
 }
+
+.footer {
+  margin-top: 30px;
+  padding: 15px;
+  background: #1e1e1e;
+  border-radius: 12px;
+  color: #bbb;
+  font-size: 0.85rem;
+  text-align: center;
+}
+.footer h3 {
+  color: #90caf9;
+  margin-bottom: 10px;
+}
