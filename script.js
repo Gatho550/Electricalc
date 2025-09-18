@@ -19,13 +19,14 @@ function calcularRecomendacion() {
   const caidaMax = 0.03 * voltaje;
 
   function calcularCalibre(material) {
-    // rho en Ω·m
     let rho = resistividades[material];
-    // area en m²
-    let area = a * 1e-6; // convertir mm² a m²
-    let R = rho * (longitud / area);
-    if (corriente * R <= caidaMax) return c;
-
+    // Ordenar los calibres de menor a mayor sección
+    let calibres = Object.entries(areasSeccion).sort((a,b) => a[1]-b[1]);
+    for (let [c, a_mm2] of calibres) {
+      let A = a_mm2 * 1e-6; // mm² a m²
+      let R = rho * (longitud / A);
+      let Vcaida = corriente * R;
+      if (Vcaida <= caidaMax) return c;
     }
     return "Ninguno cumple la norma";
   }
