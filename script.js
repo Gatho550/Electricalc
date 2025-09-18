@@ -117,12 +117,15 @@ for (let i = 0; i < acc.length; i++) {
 }
 
 // --- Sub-accordion (nivel árbol) ---
-const subAcc = document.getElementsByClassName("sub");
-for (let i = 0; i < subAcc.length; i++) {
-  subAcc[i].addEventListener("click", function(e) {
-    e.stopPropagation(); // evita que se cierre el nivel superior
+const subAcc = document.querySelectorAll(".accordion-btn.sub");
+subAcc.forEach(btn => {
+  btn.addEventListener("click", function(e) {
+    e.stopPropagation();
     this.classList.toggle("active");
     const panel = this.nextElementSibling;
-    panel.style.display = (panel.style.display === "block") ? "none" : "block";
+    if (panel && panel.classList.contains("sub-panel")) {
+      panel.style.display = (panel.style.display === "block") ? "none" : "block";
+    }
   });
-}
+});
+
