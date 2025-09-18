@@ -143,10 +143,9 @@ button:hover {
 /* Sub-panel */
 .sub-panel {
   display: none;
-  margin-left: 15px;
-  background: #353535;
-  padding: 8px 12px;
-  border-radius: 8px;
+  padding: 10px;
+  background: #2a2a2a;
+  border-left: 3px solid #444;
 }
 
 .footer {
