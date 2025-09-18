@@ -139,6 +139,21 @@ button:hover {
   border-radius: 0 12px 12px 0;
 }
 
+/* Sub accordion dentro del nivel */
+.sub {
+  background: #383838;
+  margin-left: 10px;
+}
+
+.sub-panel {
+  background: #2c2c2c;
+  margin-left: 15px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  display: none;
+  font-size: 0.95rem;
+}
+
 /* Responsivo para móviles */
 @media (max-width: 480px) {
   .tab-btn {
