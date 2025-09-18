@@ -19,10 +19,13 @@ function calcularRecomendacion() {
   const caidaMax = 0.03 * voltaje;
 
   function calcularCalibre(material) {
-    let rho = resistividades[material] * 1e6; // ajustar unidades
-    for (let [c, a] of Object.entries(areasSeccion)) {
-      let R = rho * (longitud / a);
-      if (corriente * R <= caidaMax) return c;
+    // rho en Ω·m
+    let rho = resistividades[material];
+    // area en m²
+    let area = a * 1e-6; // convertir mm² a m²
+    let R = rho * (longitud / area);
+    if (corriente * R <= caidaMax) return c;
+
     }
     return "Ninguno cumple la norma";
   }
@@ -42,8 +45,7 @@ function calcularCaida() {
 
   const resistividades = {
     "Cobre": 1.68e-8,
-    "Aluminio": 2.65e-8,
-    "Alucobre": 3.2e-8
+    "Aluminio": 2.65e-8
   };
 
   const areasSeccion = {
