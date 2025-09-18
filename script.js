@@ -1,64 +1,90 @@
-// Secciones
-function mostrarSeccion(seccionId) {
-    const secciones = document.querySelectorAll("main section");
-    secciones.forEach(sec => sec.style.display = "none");
-    document.getElementById(seccionId).style.display = "block";
+// --- Función de recomendación simplificada ---
+function calcularRecomendacion() {
+  let corriente = parseFloat(document.getElementById("rec-corriente").value);
+  let longitud = parseFloat(document.getElementById("rec-longitud").value);
+  let voltaje = parseFloat(document.getElementById("rec-voltaje").value);
+
+  if (isNaN(corriente) || isNaN(longitud) || isNaN(voltaje)) {
+    alert("Por favor completa todos los campos.");
+    return;
+  }
+
+  const resistividades = { "Cobre": 1.68e-8, "Aluminio": 2.65e-8 };
+  const areasSeccion = {
+    "20":0.518, "18":0.823, "16":1.31, "14":2.08, "12":3.31,
+    "10":5.26, "8":8.37, "6":13.3, "4":21.2, "2":33.6,
+    "1":42.4, "0":53.5, "00":67.4, "000":85.0, "0000":107
+  };
+
+  const caidaMax = 0.03 * voltaje;
+
+  function calcularCalibre(material) {
+    let rho = resistividades[material] * 1e6; // ajustar unidades
+    for (let [c, a] of Object.entries(areasSeccion)) {
+      let R = rho * (longitud / a);
+      if (corriente * R <= caidaMax) return c;
+    }
+    return "Ninguno cumple la norma";
+  }
+
+  document.getElementById("recomendacion-cobre").innerText = `✅ Cobre: ${calcularCalibre("Cobre")} AWG`;
+  document.getElementById("recomendacion-aluminio").innerText = `✅ Aluminio: ${calcularCalibre("Aluminio")} AWG`;
 }
 
-// Mostrar calculadora por defecto
-mostrarSeccion('calculadora');
-
-// ----- Calculadora -----
+// --- Función de calculadora detallada ---
 function calcularCaida() {
-    let corriente = parseFloat(document.getElementById("corriente").value);
-    let longitud = parseFloat(document.getElementById("longitud").value);
-    let voltajeEntrada = parseFloat(document.getElementById("voltaje").value);
-    let material = document.getElementById("material").value;
-    let calibre = document.getElementById("calibre").value;
-    let fase = document.getElementById("fase").value;
+  let corriente = parseFloat(document.getElementById("corriente").value);
+  let longitud = parseFloat(document.getElementById("longitud").value);
+  let voltajeEntrada = parseFloat(document.getElementById("voltaje").value);
+  let material = document.getElementById("material").value;
+  let calibre = document.getElementById("calibre").value;
+  let fase = document.getElementById("fase").value;
 
-    const resistividades = { "Cobre":1.68e-8, "Aluminio":2.65e-8, "Alucobre":3.2e-8 };
-    const areasSeccion = { "20":0.518, "18":0.823, "16":1.31, "14":2.08, "12":3.31, "10":5.26, "8":8.37, "6":13.3, "4":21.2, "2":33.6, "1":42.4, "0":53.5, "00":67.4, "000":85.0, "0000":107 };
+  const resistividades = {
+    "Cobre": 1.68e-8,
+    "Aluminio": 2.65e-8,
+    "Alucobre": 3.2e-8
+  };
 
-    let rho = resistividades[material]*1e6;
-    let area = areasSeccion[calibre];
-    let R = rho * (longitud / area);
-    if (fase==="Bifásico") R*=2; else if(fase==="Trifásico") R*=3;
+  const areasSeccion = {
+    "20":0.518, "18":0.823, "16":1.31, "14":2.08, "12":3.31,
+    "10":5.26, "8":8.37, "6":13.3, "4":21.2, "2":33.6,
+    "1":42.4, "0":53.5, "00":67.4, "000":85.0, "0000":107
+  };
 
-    let caidaVoltaje = corriente*R;
-    let voltajeSalida = voltajeEntrada - caidaVoltaje;
+  if (isNaN(corriente) || isNaN(longitud) || isNaN(voltajeEntrada)) {
+    alert("Por favor completa todos los campos numéricos.");
+    return;
+  }
 
-    document.getElementById("resultado").innerText = `Caída de tensión: ${caidaVoltaje.toFixed(4)} V`;
-    document.getElementById("salida").innerText = `Voltaje de salida: ${voltajeSalida.toFixed(4)} V`;
-}
+  let rho = resistividades[material] * 1e6; 
+  let area = areasSeccion[calibre];
+  let R = rho * (longitud / area);
 
- const caidaMax = 0.03 * voltajeEntrada;
-  let recomendaciones = [];
+  if (fase === "Bifásico") R *= 2;
+  else if (fase === "Trifásico") R *= 3;
+
+  let caidaVoltaje = corriente * R;
+  let voltajeSalida = voltajeEntrada - caidaVoltaje;
+
+  document.getElementById("resultado").innerText = `Caída de tensión: ${caidaVoltaje.toFixed(4)} V`;
+  document.getElementById("salida").innerText = `Voltaje de salida: ${voltajeSalida.toFixed(4)} V`;
+
+  const caidaMax = 0.03 * voltajeEntrada;
+  let recomendacion = "";
   for (let [c, a] of Object.entries(areasSeccion)) {
     let r = rho * (longitud / a);
     if (fase === "Bifásico") r *= 2;
     else if (fase === "Trifásico") r *= 3;
     if (corriente * r <= caidaMax) {
-      recomendaciones.push(c);
+      recomendacion = `✅ Calibre recomendado: ${c} AWG`;
+      break;
     }
   }
-
-  if (recomendaciones.length > 0) {
-    document.getElementById("recomendacion-principal").innerText = `✅ Calibres recomendados: ${recomendaciones.join(", ")} AWG`;
-  } else {
-    document.getElementById("recomendacion-principal").innerText = "⚠ Ningún calibre cumple con la caída máxima";
-  }
+  document.getElementById("recomendacion").innerText = recomendacion;
 }
 
-// Accordion para conceptos
-document.querySelectorAll(".accordion-btn").forEach(btn => {
-  btn.addEventListener("click", () => {
-    const panel = btn.nextElementSibling;
-    panel.style.display = panel.style.display === "block" ? "none" : "block";
-  });
-});
-
-// Tabs navegación
+// --- Navegación por pestañas ---
 const tabs = document.querySelectorAll(".tab-btn");
 const sections = document.querySelectorAll(".tab-section");
 
@@ -66,7 +92,6 @@ tabs.forEach(tab => {
   tab.addEventListener("click", () => {
     tabs.forEach(t => t.classList.remove("active"));
     tab.classList.add("active");
-
     sections.forEach(sec => sec.style.display = "none");
     document.getElementById(tab.dataset.tab).style.display = "block";
   });
@@ -74,3 +99,13 @@ tabs.forEach(tab => {
 
 // Mostrar la primera pestaña por defecto
 document.getElementById("recomendaciones").style.display = "block";
+
+// --- Accordion de conceptos ---
+const acc = document.getElementsByClassName("accordion-btn");
+for (let i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    const panel = this.nextElementSibling;
+    panel.style.display = (panel.style.display === "block") ? "none" : "block";
+  });
+}
