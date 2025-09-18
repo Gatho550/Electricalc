@@ -108,7 +108,7 @@ button:hover {
 }
 
 .tab-section {
-  display: none;
+  display: none; /* solo se muestra la sección activa con JS */
 }
 
 /* Accordion */
