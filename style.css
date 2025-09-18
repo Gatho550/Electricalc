@@ -82,6 +82,35 @@ button:hover {
   color: #e3f2fd;
 }
 
+/* Tabs */
+.nav {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 12px;
+  margin: 0 4px;
+  background: #333;
+  color: #90caf9;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.tab-btn:hover, .tab-btn.active {
+  background: #90caf9;
+  color: #121212;
+}
+
+.tab-section {
+  display: none;
+}
+
 /* Accordion */
 .accordion-btn {
   width: 100%;
