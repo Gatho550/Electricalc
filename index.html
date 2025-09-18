@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora Eléctrica</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+    <h1>Calculadora Eléctrica</h1>
+    <nav>
+        <button onclick="mostrarSeccion('calculadora')">Calculadora</button>
+        <button onclick="mostrarSeccion('recomendacion')">Recomendación</button>
+        <button onclick="mostrarSeccion('conceptos')">Conceptos</button>
+    </nav>
+</header>
+
+<main>
+    <!-- Calculadora -->
+    <section id="calculadora" class="seccion-activa">
+        <h2>Calculadora de Caída de Tensión</h2>
+        <label>Corriente (A): <input id="corriente" type="number" step="any"></label>
+        <label>Longitud (m): <input id="longitud" type="number" step="any"></label>
+        <label>Voltaje de entrada (V): <input id="voltaje" type="number" step="any"></label>
+        <label>Material:
+            <select id="material">
+                <option>Cobre</option>
+                <option>Aluminio</option>
+                <option>Alucobre</option>
+            </select>
+        </label>
+        <label>Calibre AWG:
+            <select id="calibre">
+                <option>20</option><option>18</option><option>16</option><option>14</option>
+                <option>12</option><option>10</option><option>8</option><option>6</option>
+                <option>4</option><option>2</option><option>1</option><option>0</option>
+                <option>00</option><option>000</option><option>0000</option>
+            </select>
+        </label>
+        <label>Sistema de fase:
+            <select id="fase">
+                <option>Monofásico</option>
+                <option>Bifásico</option>
+                <option>Trifásico</option>
+            </select>
+        </label>
+        <button onclick="calcularCaida()">Calcular</button>
+        <div class="resultados">
+            <p id="resultado"></p>
+            <p id="salida"></p>
+        </div>
+    </section>
+
+    <!-- Recomendación -->
+    <section id="recomendacion">
+        <h2>Recomendación de Calibre</h2>
+        <label>Carga (A): <input id="carga" type="number" step="any"></label>
+        <label>Voltaje (V): <input id="voltajeRec" type="number" step="any"></label>
+        <label>Distancia (m): <input id="distancia" type="number" step="any"></label>
+        <button onclick="recomendarCalibre()">Recomendar Calibre</button>
+        <div class="resultados">
+            <p id="recomendacionCobre"></p>
+            <p id="recomendacionAluminio"></p>
+        </div>
+    </section>
+
+    <!-- Conceptos con panel -->
+    <section id="conceptos">
+        <h2>Conceptos y Temario</h2>
+        <div class="conceptos-container">
+            <div class="indice">
+                <ul>
+                    <li>
+                        <button class="indice-btn" onclick="mostrarConcepto('principiante')">Principiante</button>
+                        <ul class="subindice" id="principiante">
+                            <li><button onclick="cargarContenido('Código de colores: guía de identificación de cables según colores.')">Código de colores</button></li>
+                            <li><button onclick="cargarContenido('Calibres básicos: sección y amperaje para iniciantes.')">Calibres</button></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <button class="indice-btn" onclick="mostrarConcepto('intermedio')">Intermedio</button>
+                        <ul class="subindice" id="intermedio">
+                            <li><button onclick="cargarContenido('Materiales: Cobre, Aluminio y Alucobre, propiedades y usos.')">Material del cable</button></li>
+                            <li><button onclick="cargarContenido('Sistemas de fases: monofásico, bifásico y trifásico.')">Sistemas de fase</button></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <button class="indice-btn" onclick="mostrarConcepto('avanzado')">Avanzado</button>
+                        <ul class="subindice" id="avanzado">
+                            <li><button onclick="cargarContenido('Normas NOM aplicables en instalaciones eléctricas.')">Normas NOM</button></li>
+                            <li><button onclick="cargarContenido('Cálculo de caída de tensión y resistividad.')">Caída de tensión</button></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="contenido" id="contenido">
+                <p>Selecciona un tema para ver su contenido.</p>
+            </div>
+        </div>
+    </section>
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
