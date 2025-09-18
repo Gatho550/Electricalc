@@ -113,45 +113,40 @@ button:hover {
 
 /* Accordion */
 .accordion-btn {
-  width: 100%;
-  padding: 12px;
-  margin: 8px 0;
-  text-align: left;
-  background: #333;
-  color: #90caf9;
-  border: none;
-  outline: none;
+  background: #2c2c2c;
+  color: #e0e0e0;
   cursor: pointer;
+  padding: 12px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 1rem;
+  transition: 0.2s;
   border-radius: 12px;
-  transition: 0.3s;
+  margin-top: 5px;
 }
 
-.accordion-btn:hover {
-  background: #444;
+.accordion-btn.active {
+  background: #90caf9;
+  color: #121212;
 }
 
 .panel {
-  padding: 0 12px;
   display: none;
-  background-color: #1e1e1e;
-  overflow: hidden;
-  border-left: 2px solid #90caf9;
-  border-radius: 0 12px 12px 0;
-}
-
-/* Sub accordion dentro del nivel */
-.sub {
-  background: #383838;
-  margin-left: 10px;
-}
-
-.sub-panel {
   background: #2c2c2c;
-  margin-left: 15px;
   padding: 8px 12px;
   border-radius: 8px;
+  margin-bottom: 5px;
+}
+
+/* Sub-panel */
+.sub-panel {
   display: none;
-  font-size: 0.95rem;
+  margin-left: 15px;
+  background: #353535;
+  padding: 8px 12px;
+  border-radius: 8px;
 }
 
 /* Responsivo para móviles */
