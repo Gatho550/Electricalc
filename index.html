@@ -10,37 +10,60 @@
   <div class="container">
     <h1>⚡ Calculadora de Caída de Tensión</h1>
 
-    <div class="form-section">
-      <h2>Datos de la instalación</h2>
-      <label>Corriente (A): <input id="corriente" type="number" step="any"></label>
-      <label>Longitud (m): <input id="longitud" type="number" step="any"></label>
-      <label>Voltaje de entrada (V): <input id="voltaje" type="number" step="any"></label>
-      <label>Material:
-        <select id="material">
-          <option>Cobre</option>
-          <option>Aluminio</option>
-          <option>Alucobre</option>
-        </select>
-      </label>
-      <label>Calibre AWG:
-        <select id="calibre">
-          <option>20</option><option>18</option><option>16</option><option>14</option>
-          <option>12</option><option>10</option><option>8</option><option>6</option>
-          <option>4</option><option>2</option><option>1</option><option>0</option>
-          <option>00</option><option>000</option><option>0000</option>
-        </select>
-      </label>
-      <label>Sistema de fase:
-        <select id="fase">
-          <option>Monofásico</option>
-          <option>Bifásico</option>
-          <option>Trifásico</option>
-        </select>
-      </label>
-      <button onclick="calcularCaida()">Calcular</button>
+<!-- Barra de navegación -->
+    <div class="nav">
+      <button class="tab-btn active" data-tab="recomendaciones">Recomendaciones</button>
+      <button class="tab-btn" data-tab="calculadora">Calculadora</button>
+      <button class="tab-btn" data-tab="conceptos">Conceptos</button>
     </div>
 
-        <div class="concepts-section">
+    <!-- Sección de Recomendaciones (principal) -->
+    <div class="tab-section" id="recomendaciones">
+      <h2>✅ Calibres recomendados</h2>
+      <p id="recomendacion-principal">Ingresa datos en la calculadora para ver las recomendaciones.</p>
+    </div>
+
+    <!-- Sección Calculadora -->
+    <div class="tab-section" id="calculadora">
+      <div class="form-section">
+        <h2>Datos de la instalación</h2>
+        <label>Corriente (A): <input id="corriente" type="number" step="any"></label>
+        <label>Longitud (m): <input id="longitud" type="number" step="any"></label>
+        <label>Voltaje de entrada (V): <input id="voltaje" type="number" step="any"></label>
+        <label>Material:
+          <select id="material">
+            <option>Cobre</option>
+            <option>Aluminio</option>
+            <option>Alucobre</option>
+          </select>
+        </label>
+        <label>Calibre AWG:
+          <select id="calibre">
+            <option>20</option><option>18</option><option>16</option><option>14</option>
+            <option>12</option><option>10</option><option>8</option><option>6</option>
+            <option>4</option><option>2</option><option>1</option><option>0</option>
+            <option>00</option><option>000</option><option>0000</option>
+          </select>
+        </label>
+        <label>Sistema de fase:
+          <select id="fase">
+            <option>Monofásico</option>
+            <option>Bifásico</option>
+            <option>Trifásico</option>
+          </select>
+        </label>
+        <button onclick="calcularCaida()">Calcular</button>
+      </div>
+
+      <div class="result-section">
+        <h2>Resultados</h2>
+        <p id="resultado"></p>
+        <p id="salida"></p>
+      </div>
+    </div>
+
+    <!-- Sección Conceptos -->
+    <div class="tab-section" id="conceptos">
       <h2>Conceptos</h2>
       <div class="accordion">
         <button class="accordion-btn">Caída de tensión</button>
@@ -59,13 +82,7 @@
         </div>
       </div>
     </div>
-    
-    <div class="result-section">
-      <h2>Resultados</h2>
-      <p id="resultado"></p>
-      <p id="salida"></p>
-      <p id="recomendacion"></p>
-    </div>
+
   </div>
 
   <script src="script.js"></script>
