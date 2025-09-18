@@ -115,17 +115,3 @@ for (let i = 0; i < acc.length; i++) {
     panel.style.display = (panel.style.display === "block") ? "none" : "block";
   });
 }
-
-// --- Sub-accordion (nivel árbol) ---
-const subAcc = document.querySelectorAll(".accordion-btn.sub");
-subAcc.forEach(btn => {
-  btn.addEventListener("click", function(e) {
-    e.stopPropagation();
-    this.classList.toggle("active");
-    const panel = this.nextElementSibling;
-    if (panel && panel.classList.contains("sub-panel")) {
-      panel.style.display = (panel.style.display === "block") ? "none" : "block";
-    }
-  });
-});
-
