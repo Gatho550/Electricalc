@@ -1,4 +1,4 @@
-/* Tema oscuro minimalista */
+/* --- Estilos generales --- */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: #121212;
@@ -8,8 +8,8 @@ body {
 }
 
 .container {
-  max-width: 600px;
-  margin: 200px auto;
+  max-width: 500px;
+  margin: 40px auto;
   padding: 20px;
   background: #1e1e1e;
   border-radius: 16px;
@@ -69,35 +69,7 @@ button:hover {
   background: #64b5f6;
 }
 
-/* Tabs */
-.nav {
-  display: flex;
-  justify-content: space-around;
-  margin-bottom: 20px;
-}
-
-.tab-btn {
-  flex: 1;
-  padding: 12px;
-  margin: 0 4px;
-  background: #333;
-  color: #90caf9;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: 0.3s;
-}
-
-.tab-btn:hover, .tab-btn.active {
-  background: #90caf9;
-  color: #121212;
-}
-
-.tab-section {
-  display: none; /* solo se muestra la sección activa con JS */
-}
-
+/* --- Resultados --- */
 .result-section {
   margin-top: 20px;
   padding: 15px;
@@ -111,43 +83,77 @@ button:hover {
   color: #e3f2fd;
 }
 
-/* Accordion */
+/* --- Accordion y sub-accordion --- */
 .accordion-btn {
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  padding: 12px;
+  margin: 4px 0;
+  border: none;
+  outline: none;
   background: #2c2c2c;
   color: #e0e0e0;
-  cursor: pointer;
-  padding: 12px;
-  width: 100%;
-  border: none;
-  text-align: left;
-  outline: none;
-  font-size: 1rem;
-  transition: 0.2s;
   border-radius: 12px;
-  margin-top: 5px;
+  font-size: 1rem;
+  transition: 0.3s;
 }
 
+.accordion-btn:hover,
 .accordion-btn.active {
   background: #90caf9;
   color: #121212;
 }
 
-.panel {
-  display: none;
-  background: #2c2c2c;
-  padding: 8px 12px;
-  border-radius: 8px;
-  margin-bottom: 5px;
-}
-
-/* Sub-panel */
 .sub-panel {
   display: none;
-  padding: 10px;
-  background: #2a2a2a;
-  border-left: 3px solid #444;
+  padding: 10px 20px;
+  background: #383838;
+  border-radius: 12px;
+  margin-bottom: 8px;
 }
 
+.sub-panel p {
+  cursor: pointer;
+}
+
+/* --- Modal --- */
+#concept-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.8);
+  color: #fff;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+#concept-modal div {
+  background: #1e1e1e;
+  border-radius: 12px;
+  padding: 20px;
+  max-width: 600px;
+  width: 90%;
+}
+
+#concept-modal button {
+  margin-top: 10px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  border: none;
+  background: #90caf9;
+  color: #121212;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* --- Footer --- */
 .footer {
   margin-top: 30px;
   padding: 20px;
@@ -158,6 +164,7 @@ button:hover {
   text-align: center;
   line-height: 1.5;
 }
+
 .footer h3 {
   color: #90caf9;
   margin-bottom: 12px;
@@ -168,7 +175,7 @@ button:hover {
   margin: 8px 0;
 }
 
-/* 📱 Responsividad para móviles */
+/* --- Responsivo --- */
 @media (max-width: 768px) {
   .container {
     max-width: 95%;
@@ -202,6 +209,10 @@ button:hover {
     font-size: 0.95rem;
     padding: 10px;
   }
+
+  .sub-panel {
+    padding: 8px 12px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -218,11 +229,6 @@ button:hover {
   }
 
   input, select, button {
-    font-size: 0.9rem;
-    padding: 8px;
-  }
-
-  .accordion-btn {
     font-size: 0.9rem;
     padding: 8px;
   }
