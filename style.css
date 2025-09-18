@@ -81,3 +81,31 @@ button:hover {
   font-size: 1rem;
   color: #e3f2fd;
 }
+
+/* Accordion */
+.accordion-btn {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  text-align: left;
+  background: #333;
+  color: #90caf9;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  border-radius: 12px;
+  transition: 0.3s;
+}
+
+.accordion-btn:hover {
+  background: #444;
+}
+
+.panel {
+  padding: 0 12px;
+  display: none;
+  background-color: #1e1e1e;
+  overflow: hidden;
+  border-left: 2px solid #90caf9;
+  border-radius: 0 12px 12px 0;
+}
