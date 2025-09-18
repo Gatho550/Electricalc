@@ -8,7 +8,7 @@
 </head>
 <body>
   <div class="container">
-    <h1>⚡ Calculadora de Caída de Tensión</h1>
+    <h1>⚡ Calculadora Eléctrica</h1>
 
 <!-- Barra de navegación -->
     <div class="nav">
@@ -17,10 +17,15 @@
       <button class="tab-btn" data-tab="conceptos">Conceptos</button>
     </div>
 
-    <!-- Sección de Recomendaciones (principal) -->
+    <!-- Sección de Recomendaciones -->
     <div class="tab-section" id="recomendaciones">
-      <h2>✅ Calibres recomendados</h2>
-      <p id="recomendacion-principal">Ingresa datos en la calculadora para ver las recomendaciones.</p>
+      <h2>Calibres recomendados</h2>
+      <label>Corriente (A): <input id="rec-corriente" type="number" step="any"></label>
+      <label>Longitud (m): <input id="rec-longitud" type="number" step="any"></label>
+      <label>Voltaje (V): <input id="rec-voltaje" type="number" step="any"></label>
+      <button onclick="calcularRecomendacion()">Calcular calibre</button>
+      <p id="recomendacion-cobre"></p>
+      <p id="recomendacion-aluminio"></p>
     </div>
 
     <!-- Sección Calculadora -->
