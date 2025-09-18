@@ -1,0 +1,131 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: #f4f4f4;
+}
+
+header {
+    background: #007bff;
+    color: white;
+    padding: 10px;
+    text-align: center;
+}
+
+nav {
+    margin-top: 10px;
+}
+
+nav button {
+    margin: 0 5px;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+nav button:hover {
+    background: #0056b3;
+}
+
+main {
+    max-width: 900px;
+    margin: 20px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.seccion-activa {
+    display: block;
+}
+
+section {
+    display: none;
+}
+
+label {
+    display: block;
+    margin: 10px 0;
+}
+
+input, select {
+    width: 100%;
+    padding: 6px;
+    margin-top: 4px;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 15px;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background: #218838;
+}
+
+.resultados p {
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* Panel conceptos */
+.conceptos-container {
+    display: flex;
+    gap: 20px;
+}
+
+.indice {
+    width: 40%;
+}
+
+.indice ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.indice-btn {
+    width: 100%;
+    text-align: left;
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 5px;
+    margin-bottom: 3px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.indice-btn:hover {
+    background: #0056b3;
+}
+
+.subindice {
+    display: none;
+    padding-left: 15px;
+}
+
+.subindice li button {
+    background: #6c757d;
+    margin: 2px 0;
+}
+
+.subindice li button:hover {
+    background: #5a6268;
+}
+
+.contenido {
+    width: 60%;
+    background: #e9ecef;
+    padding: 10px;
+    border-radius: 4px;
+    min-height: 200px;
+    overflow-y: auto;
+}
