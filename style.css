@@ -175,6 +175,29 @@ button:hover {
   margin: 8px 0;
 }
 
+.tabs {
+  display: flex;
+  justify-content: space-around;
+  background-color: #1e1e1e;
+  padding: 10px;
+  border-radius: 12px;
+  flex-wrap: wrap; /* asegura que no se rompa en pantallas muy pequeñas */
+}
+
+.tab-btn {
+  background: #333;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.tab-btn.active {
+  background: #90caf9;
+  color: #000;
+}
+
 /* --- Responsivo --- */
 @media (max-width: 768px) {
   .container {
