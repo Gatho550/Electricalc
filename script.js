@@ -66,3 +66,11 @@ function mostrarConcepto(id) {
 function cargarContenido(texto) {
     document.getElementById("contenido").innerText = texto;
 }
+
+// Accordion para conceptos
+document.querySelectorAll(".accordion-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const panel = btn.nextElementSibling;
+    panel.style.display = panel.style.display === "block" ? "none" : "block";
+  });
+});
