@@ -175,6 +175,11 @@ button:hover {
   margin: 8px 0;
 }
 
+.tab-section,
+.tab-content {
+  display: none;   /* Ocultar todo al inicio */
+}
+
 .tabs {
   display: flex;
   justify-content: space-around;
