@@ -180,28 +180,30 @@ button:hover {
   display: none;   /* Ocultar todo al inicio */
 }
 
+/* Contenedor de los botones de la barra de navegación */
 .tabs {
-  display: flex;
-  justify-content: space-around;
-  background-color: #1e1e1e;
+  display: flex;              /* Coloca los elementos en una fila */
+  justify-content: center;     /* Opcional: centra los botones */
+  gap: 10px;                   /* Espacio entre botones */
+  background: #1e1e1e;         /* Color de fondo opcional */
   padding: 10px;
-  border-radius: 12px;
-  flex-wrap: wrap; /* asegura que no se rompa en pantallas muy pequeñas */
 }
 
-.tab-btn {
-  background: #333;
-  color: #fff;
-  border: none;
+/* Botones individuales */
+.tabs .tab-btn {
+  display: inline-block;       /* Asegura que no se estiren en bloque */
   padding: 10px 20px;
-  border-radius: 8px;
+  color: #fff;
+  background: #333;
+  border: none;
+  border-radius: 5px;
   cursor: pointer;
 }
 
-.tab-btn.active {
-  background: #90caf9;
-  color: #000;
+.tabs .tab-btn.active {
+  background: #555;            /* Color cuando está seleccionada */
 }
+
 
 /* --- Responsivo --- */
 @media (max-width: 768px) {
