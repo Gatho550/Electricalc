@@ -64,135 +64,63 @@
       </div>
     </div>
 
-<!-- Pestaña Conceptos -->
-<div id="conceptos" class="tab-section">
+<!-- =================== DEFINICIONES =================== -->
+<section id="definiciones" class="tab-content">
+    <h2>Definiciones</h2>
 
-  <h2>Conceptos</h2>
-
-  <!-- Nivel Básico -->
-  <button class="accordion-btn toggle-btn">🔹 Nivel Básico – Fundamentos para principiantes</button>
-  <div class="sub-panel">
-
-    <button class="accordion-btn toggle-btn sub">Introducción a la electricidad</button>
-    <div class="sub-panel">
-      <p class="concepto-item" data-info="corriente">• ¿Qué es la corriente, voltaje y resistencia? (Ohm)</p>
-      <p class="concepto-item" data-info="ca">• Diferencia entre corriente alterna (CA) y corriente continua (CC)</p>
-      <p class="concepto-item" data-info="unidades">• Unidades de medida (W, V, A, Ω)</p>
+    <div class="accordion">
+        <button class="accordion-btn">Caída de Tensión</button>
+        <div class="accordion-content">
+            <p>
+                La <strong>caída de tensión</strong> es la pérdida de voltaje que ocurre cuando la
+                corriente eléctrica circula a través de un conductor debido a su resistencia.
+                <br><br>
+                ⚡ <em>Ejemplo:</em> En un circuito de 120 V, si existe una caída de 6 V desde
+                la fuente hasta el punto de consumo, el voltaje disponible será de 114 V.
+            </p>
+        </div>
     </div>
 
-    <button class="accordion-btn toggle-btn sub">Normas de seguridad eléctrica</button>
-    <div class="sub-panel">
-      <p class="concepto-item" data-info="nom029">• NOM-029-STPS-2011 (mantenimiento en instalaciones eléctricas)</p>
-      <p class="concepto-item" data-info="epp">• Equipo de protección personal (EPP)</p>
-      <p class="concepto-item" data-info="senalizacion">• Señalización básica y precauciones</p>
+    <div class="accordion">
+        <button class="accordion-btn">Conductores</button>
+        <div class="accordion-content">
+            <p>
+                Los <strong>conductores eléctricos</strong> son materiales que permiten el
+                paso de la corriente con baja resistencia. En instalaciones eléctricas se usan
+                principalmente cables de cobre o aluminio.
+                <br><br>
+                💡 <em>Ejemplo:</em> Un cable de cobre calibre 12 AWG se utiliza comúnmente
+                para circuitos de iluminación en hogares.
+            </p>
+        </div>
     </div>
 
-    <button class="accordion-btn toggle-btn sub">Conductores eléctricos y calibres</button>
-    <div class="sub-panel">
-      <p class="concepto-item" data-info="cobreAlu">• Cobre vs Aluminio</p>
-      <p class="concepto-item" data-info="awg">• Calibres AWG y sus áreas (NMX-J-098-ANCE-2017)</p>
-      <p class="concepto-item" data-info="ampacidad">• Capacidad de conducción de corriente (ampacidad básica)</p>
+    <div class="accordion">
+        <button class="accordion-btn">Resistividad (ρ)</button>
+        <div class="accordion-content">
+            <p>
+                La <strong>resistividad</strong> es una propiedad física que indica qué tanto
+                un material se opone al paso de la corriente eléctrica.
+                <br><br>
+                🔧 <em>Dato:</em> Para el cobre, ρ ≈ 1.72 × 10⁻⁸ Ω·m a 20 °C.
+            </p>
+        </div>
     </div>
 
-    <button class="accordion-btn toggle-btn sub">Circuitos eléctricos básicos</button>
-    <div class="sub-panel">
-      <p class="concepto-item" data-info="serieParalelo">• Conexiones serie y paralelo</p>
-      <p class="concepto-item" data-info="consumo">• Consumo de potencia en aparatos eléctricos</p>
-      <p class="concepto-item" data-info="carga">• Concepto de carga conectada</p>
+    <div class="accordion">
+        <button class="accordion-btn">Área del Conductor</button>
+        <div class="accordion-content">
+            <p>
+                El <strong>área transversal</strong> es la sección interna del cable que
+                determina su capacidad para transportar corriente.
+                <br><br>
+                📏 <em>Ejemplo:</em> Un conductor de 4 mm² soporta más corriente que uno de
+                2.5 mm², reduciendo la caída de tensión.
+            </p>
+        </div>
     </div>
+</section>
 
-  </div>
-
-  <!-- Nivel Intermedio -->
-  <button class="accordion-btn toggle-btn">🔹 Nivel Intermedio – Aplicaciones prácticas</button>
-  <div class="sub-panel">
-
-    <button class="accordion-btn toggle-btn sub">Instalaciones eléctricas residenciales</button>
-    <div class="sub-panel">
-      <p class="concepto-item" data-info="nom001">• NOM-001-SEDE-2012: principios básicos</p>
-      <p class="concepto-item" data-info="sistemas">• Tipos de sistemas monofásico, bifásico y trifásico</p>
-      <p class="concepto-item" data-info="dimensionamiento">• Dimensionamiento de conductores por carga</p>
-    </div>
-
-    <button class="accordion-btn toggle-btn sub">Caída de tensión</button>
-    <div class="sub-panel">
-      <p class="concepto-item" data-info="formula">• Fórmula básica de caída de tensión</p>
-      <p class="concepto-item" data-info="nom">• NOM-001-SEDE (máximo 3% en circuito derivado y 5% total)</p>
-      <p class="concepto-item" data-info="calculo">• Cálculo práctico de caída en monofásico, bifásico y trifásico</p>
-    </div>
-
-    <button class="accordion-btn toggle-btn sub">Protecciones eléctricas</button>
-    <div class="sub-panel">
-      <p class="concepto-item" data-info="fusibles">• Fusibles y pastillas termomagnéticas</p>
-      <p class="concepto-item" data-info="disyuntores">• Disyuntores diferenciales (RCD)</p>
-      <p class="concepto-item" data-info="seleccionProtecciones">• Selección de protecciones por carga</p>
-    </div>
-
-    <button class="accordion-btn toggle-btn sub">Puesta a tierra</button>
-    <div class="sub-panel">
-      <p class="concepto-item" data-info="conceptoTierra">• Concepto de puesta a tierra</p>
-      <p class="concepto-item" data-info="varillas">• Varillas, mallas y sistemas de tierra</p>
-      <p class="concepto-item" data-info="nomTierra">• NOM-001-SEDE – requisitos mínimos</p>
-    </div>
-
-    <button class="accordion-btn toggle-btn sub">Eficiencia energética</button>
-    <div class="sub-panel">
-      <p class="concepto-item" data-info="nomEner">• NOM-013-ENER-2013 (alumbrado eficiente)</p>
-      <p class="concepto-item" data-info="consumoEnergia">• Cálculo de consumo de energía (kWh)</p>
-      <p class="concepto-item" data-info="medidores">• Uso de medidores y corrección del factor de potencia (introducción)</p>
-    </div>
-
-  </div>
-
-  <!-- Nivel Avanzado -->
-  <button class="accordion-btn toggle-btn">🔹 Nivel Avanzado – Ingeniería y normatividad avanzada</button>
-  <div class="sub-panel">
-
-    <button class="accordion-btn toggle-btn sub">Diseño de sistemas eléctricos</button>
-    <div class="sub-panel">
-      <p class="concepto-item" data-info="seleccionConductores">• Selección de conductores con corrección por temperatura y agrupamiento (NOM-001-SEDE Tablas)</p>
-      <p class="concepto-item" data-info="ampacidadAvanzada">• Cálculo de ampacidad avanzada</p>
-      <p class="concepto-item" data-info="balanceo">• Balanceo de cargas en sistemas trifásicos</p>
-    </div>
-
-    <button class="accordion-btn toggle-btn sub">Cálculo de cortocircuito</button>
-    <div class="sub-panel">
-      <p class="concepto-item" data-info="corrienteFalla">• Concepto de corriente de falla</p>
-      <p class="concepto-item" data-info="metodosCorte">• Métodos de cálculo (simplificado)</p>
-      <p class="concepto-item" data-info="proteccionesInterrupcion">• Selección de protecciones según capacidad de interrupción</p>
-    </div>
-
-    <button class="accordion-btn toggle-btn sub">Tableros eléctricos y distribución</button>
-    <div class="sub-panel">
-      <p class="concepto-item" data-info="normaTableros">• NMX-J-010-ANCE-2012</p>
-      <p class="concepto-item" data-info="tableros">• Tableros de distribución de baja tensión</p>
-      <p class="concepto-item" data-info="canalizaciones">• Canalizaciones (tuberías, charolas, ductos)</p>
-    </div>
-
-    <button class="accordion-btn toggle-btn sub">Instalaciones industriales y comerciales</button>
-    <div class="sub-panel">
-      <p class="concepto-item" data-info="nom031">• NOM-031-STPS-2011 (seguridad en construcción)</p>
-      <p class="concepto-item" data-info="pruebas">• Puesta en marcha y pruebas eléctricas</p>
-      <p class="concepto-item" data-info="acometidas">• Acometidas, transformadores y bancos de capacitores</p>
-    </div>
-
-    <button class="accordion-btn toggle-btn sub">Normatividad internacional de referencia</button>
-    <div class="sub-panel">
-      <p class="concepto-item" data-info="nfpa">• NFPA 70 – NEC (National Electrical Code)</p>
-      <p class="concepto-item" data-info="ieee">• IEEE Std 141 (Red Book)</p>
-      <p class="concepto-item" data-info="iec">• IEC (International Electrotechnical Commission)</p>
-    </div>
-
-    <button class="accordion-btn toggle-btn sub">Tópicos avanzados opcionales</button>
-    <div class="sub-panel">
-      <p class="concepto-item" data-info="factorPotencia">• Corrección del factor de potencia</p>
-      <p class="concepto-item" data-info="armonicos">• Armónicos y calidad de energía</p>
-      <p class="concepto-item" data-info="calibresLargos">• Selección de calibres por calentamiento y distancias largas</p>
-    </div>
-
-  </div>
-
-</div>
 
 <div class="footer">
   <h3>Política de Privacidad y Aviso Legal</h3>
