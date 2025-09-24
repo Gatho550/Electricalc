@@ -1,172 +1,73 @@
-// --- Función de recomendación simplificada ---
-function calcularRecomendacion() {
-  let corriente = parseFloat(document.getElementById("rec-corriente").value);
-  let longitud = parseFloat(document.getElementById("rec-longitud").value);
-  let voltaje = parseFloat(document.getElementById("rec-voltaje").value);
+// =================== CALCULADORA DE CAÍDA DE TENSIÓN ===================
+document.getElementById("calcular").addEventListener("click", function () {
+    // Propiedades del conductor
+    const resistividad = 1.72e-8; // Ω·m (cobre a 20 °C)
+    const area = parseFloat(document.getElementById("area").value); // m²
+    const longitudConductor = parseFloat(document.getElementById("longitud").value); // m (ida y vuelta si no se multiplica)
+    const corrienteAmperes = parseFloat(document.getElementById("corriente").value); // A
+    const voltajeVolts = parseFloat(document.getElementById("voltaje").value); // V
 
-  if (isNaN(corriente) || isNaN(longitud) || isNaN(voltaje)) {
-    alert("Por favor completa todos los campos.");
-    return;
-  }
-
-  const resistividades = { "Cobre": 1.68e-8, "Aluminio": 2.65e-8 };
-  const areasSeccion = {
-    "20":0.518, "18":0.823, "16":1.31, "14":2.08, "12":3.31,
-    "10":5.26, "8":8.37, "6":13.3, "4":21.2, "2":33.6,
-    "1":42.4, "0":53.5, "00":67.4, "000":85.0, "0000":107
-  };
-
-  const caidaMax = 0.03 * voltaje;
-
-  function calcularCalibre(material) {
-    let rho = resistividades[material];
-    // Ordenar los calibres de menor a mayor sección
-    let calibres = Object.entries(areasSeccion).sort((a,b) => a[1]-b[1]);
-    for (let [c, a_mm2] of calibres) {
-      let A = a_mm2 * 1e-6; // mm² a m²
-      let R = rho * (longitud / A);
-      let Vcaida = corriente * R;
-      if (Vcaida <= caidaMax) return c;
+    // Validación
+    if (
+        isNaN(area) || isNaN(longitudConductor) ||
+        isNaN(corrienteAmperes) || isNaN(voltajeVolts) ||
+        area <= 0 || longitudConductor <= 0 ||
+        corrienteAmperes <= 0 || voltajeVolts <= 0
+    ) {
+        document.getElementById("resultado").textContent = "⚠️ Por favor ingresa valores válidos y mayores a 0.";
+        return;
     }
-    return "Ninguno cumple la norma";
-  }
 
-  document.getElementById("recomendacion-cobre").innerText = `✅ Cobre: ${calcularCalibre("Cobre")} AWG`;
-  document.getElementById("recomendacion-aluminio").innerText = `✅ Aluminio: ${calcularCalibre("Aluminio")} AWG`;
-}
+    // Fórmula de resistencia: R = ρ * (L / A)
+    // ⚡ Nota: Si el usuario solo ingresa la longitud de ida, multiplicar por 2:
+    const R = resistividad * (longitudConductor / area);
 
-// --- Función de calculadora detallada ---
-function calcularCaida() {
-  let corriente = parseFloat(document.getElementById("corriente").value);
-  let longitud = parseFloat(document.getElementById("longitud").value);
-  let voltajeEntrada = parseFloat(document.getElementById("voltaje").value);
-  let material = document.getElementById("material").value;
-  let calibre = document.getElementById("calibre").value;
-  let fase = document.getElementById("fase").value;
+    // Caída de tensión Vd = I * R
+    const Vd = corrienteAmperes * R;
+    const porcentaje = (Vd / voltajeVolts) * 100;
 
-  const resistividades = {
-    "Cobre": 1.68e-8,
-    "Aluminio": 2.65e-8
-  };
-
-  const areasSeccion = {
-    "20":0.518, "18":0.823, "16":1.31, "14":2.08, "12":3.31,
-    "10":5.26, "8":8.37, "6":13.3, "4":21.2, "2":33.6,
-    "1":42.4, "0":53.5, "00":67.4, "000":85.0, "0000":107
-  };
-
-  if (isNaN(corriente) || isNaN(longitud) || isNaN(voltajeEntrada)) {
-    alert("Por favor completa todos los campos numéricos.");
-    return;
-  }
-
-  let rho = resistividades[material];
-  let area = areasSeccion[calibre] * 1e-6; // mm² a m²
-  let R = rho * (longitud / area);
-
-  if (fase === "Bifásico") R *= 2;
-  else if (fase === "Trifásico") R *= 3;
-
-  let caidaVoltaje = corriente * R;
-  let voltajeSalida = voltajeEntrada - caidaVoltaje;
-
-  document.getElementById("resultado").innerText = `Caída de tensión: ${caidaVoltaje.toFixed(4)} V`;
-  document.getElementById("salida").innerText = `Voltaje de salida: ${voltajeSalida.toFixed(4)} V`;
-
-  const caidaMax = 0.03 * voltajeEntrada;
-  let recomendacion = "";
-  // Ordenar calibres de menor a mayor
-  let calibres = Object.entries(areasSeccion).sort((a,b) => a[1]-b[1]);
-  for (let [c, a_mm2] of calibres) {
-    let A = a_mm2 * 1e-6;
-    let r = rho * (longitud / A);
-    if (fase === "Bifásico") r *= 2;
-    else if (fase === "Trifásico") r *= 3;
-    if (corriente * r <= caidaMax) {
-      recomendacion = `✅ Calibre recomendado: ${c} AWG`;
-      break;
-    }
-  }
-  document.getElementById("recomendacion").innerText = recomendacion;
-}
-
-// --- Navegación por pestañas ---
-const tabs = document.querySelectorAll(".tab-btn");
-const sections = document.querySelectorAll(".tab-section");
-
-tabs.forEach(tab => {
-  tab.addEventListener("click", () => {
-    tabs.forEach(t => t.classList.remove("active"));
-    tab.classList.add("active");
-    sections.forEach(sec => sec.style.display = "none");
-    document.getElementById(tab.dataset.tab).style.display = "block";
-  });
+    // Resultado
+    document.getElementById("resultado").innerHTML =
+        `Caída de tensión: <strong>${Vd.toFixed(2)} V</strong> 
+        (${porcentaje.toFixed(2)} % del voltaje nominal)`;
 });
 
-// Mostrar la primera pestaña por defecto
+// =================== TABS ===================
+const tabButtons = document.querySelectorAll(".tab-btn");
+tabButtons.forEach(btn => {
+    btn.addEventListener("click", function () {
+        document.querySelectorAll(".tab-content").forEach(tab => tab.style.display = "none");
+        document.getElementById(this.dataset.tab).style.display = "block";
+        tabButtons.forEach(b => b.classList.remove("active"));
+        this.classList.add("active");
+    });
+});
+// Activa la pestaña inicial
+document.querySelector(".tab-btn[data-tab='recomendaciones']").classList.add("active");
 document.getElementById("recomendaciones").style.display = "block";
 
-// --- Accordion principal ---
-const acc = document.getElementsByClassName("accordion-btn");
-for (let i = 0; i < acc.length; i++) {
-  acc[i].addEventListener("click", function() {
-    this.classList.toggle("active");
-    const panel = this.nextElementSibling;
-    panel.style.display = (panel.style.display === "block") ? "none" : "block";
-  });
-}
+// =================== ACORDEÓN ===================
+document.querySelectorAll(".accordion-btn").forEach(btn => {
+    btn.addEventListener("click", function () {
+        this.classList.toggle("active");
+        const content = this.nextElementSibling;
+        content.style.display = (content.style.display === "block") ? "none" : "block";
+    });
+});
 
-// --- Sub-accordion (nivel árbol) ---
-const subAcc = document.getElementsByClassName("sub");
-for (let i = 0; i < subAcc.length; i++) {
-  subAcc[i].addEventListener("click", function(e) {
-    e.stopPropagation(); // evita que se cierre el nivel superior
-    this.classList.toggle("active");
-    const panel = this.nextElementSibling;
-    panel.style.display = (panel.style.display === "block") ? "none" : "block";
-  });
-}
+// =================== MODAL ===================
+const modal = document.getElementById("modal");
+const modalText = document.getElementById("modal-text");
+const closeBtn = document.getElementById("close-modal");
 
-// --- Modal para mostrar contenido detallado ---
-const modal = document.createElement("div");
-modal.id = "concept-modal";
-modal.style.position = "fixed";
-modal.style.top = "0";
-modal.style.left = "0";
-modal.style.width = "100%";
-modal.style.height = "100%";
-modal.style.background = "rgba(0,0,0,0.8)";
-modal.style.color = "#fff";
-modal.style.display = "none";
-modal.style.justifyContent = "center";
-modal.style.alignItems = "center";
-modal.style.padding = "20px";
-modal.style.overflowY = "auto";
-modal.style.zIndex = "1000";
+document.querySelectorAll(".modal-link").forEach(link => {
+    link.addEventListener("click", function () {
+        modalText.textContent = this.dataset.text;
+        modal.style.display = "block";
+    });
+});
 
-const modalContent = document.createElement("div");
-modalContent.style.background = "#1e1e1e";
-modalContent.style.borderRadius = "12px";
-modalContent.style.padding = "20px";
-modalContent.style.maxWidth = "600px";
-modalContent.style.width = "90%";
-modal.appendChild(modalContent);
-
-const closeBtn = document.createElement("button");
-closeBtn.innerText = "Cerrar";
-closeBtn.style.marginTop = "10px";
-closeBtn.onclick = () => { modal.style.display = "none"; };
-modalContent.appendChild(closeBtn);
-
-document.body.appendChild(modal);
-
-// Abrir modal al hacer click en un sub-accordion
-const subPanels = document.querySelectorAll(".sub-panel p");
-subPanels.forEach(p => {
-  p.style.cursor = "pointer";
-  p.addEventListener("click", function(e){
-    modalContent.innerHTML = `<p>${this.innerText}</p>`;
-    modalContent.appendChild(closeBtn);
-    modal.style.display = "flex";
-  });
+closeBtn.addEventListener("click", () => modal.style.display = "none");
+window.addEventListener("click", e => {
+    if (e.target === modal) modal.style.display = "none";
 });
