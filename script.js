@@ -71,3 +71,15 @@ closeBtn.addEventListener("click", () => modal.style.display = "none");
 window.addEventListener("click", e => {
     if (e.target === modal) modal.style.display = "none";
 });
+
+// Ocultar todos los paneles de acordeón al iniciar
+const panels = document.querySelectorAll(".sub-panel");
+panels.forEach(panel => {
+  panel.style.display = "none";
+});
+
+const mainAcc = document.querySelectorAll(".accordion-btn:not(.sub)");
+mainAcc.forEach(btn => {
+  const panel = btn.nextElementSibling;
+  panel.style.display = "none";
+});
