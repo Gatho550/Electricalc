@@ -107,10 +107,9 @@ button:hover {
 
 .sub-panel {
   display: none;
-  padding: 10px 20px;
-  background: #383838;
-  border-radius: 12px;
-  margin-bottom: 8px;
+}
+.sub-panel.active {
+  display: block;
 }
 
 .sub-panel p {
