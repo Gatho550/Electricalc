@@ -1,82 +1,137 @@
 // =================== CALCULADORA DE CAÍDA DE TENSIÓN ===================
-document.getElementById("calcular").addEventListener("click", function () {
-    // Propiedades del conductor
-    const resistividad = 1.72e-8; // Ω·m (cobre a 20 °C)
-    const area = parseFloat(document.getElementById("area").value); // m²
-    const longitudConductor = parseFloat(document.getElementById("longitud").value); // m (ida y vuelta si no se multiplica)
-    const corrienteAmperes = parseFloat(document.getElementById("corriente").value); // A
-    const voltajeVolts = parseFloat(document.getElementById("voltaje").value); // V
+function calcularCaida() {
+  const resistividadCobre = 1.72e-8;
+  const resistividadAluminio = 2.82e-8;
+  const resistividadAlucobre = 2.1e-8;
 
-    // Validación
-    if (
-        isNaN(area) || isNaN(longitudConductor) ||
-        isNaN(corrienteAmperes) || isNaN(voltajeVolts) ||
-        area <= 0 || longitudConductor <= 0 ||
-        corrienteAmperes <= 0 || voltajeVolts <= 0
-    ) {
-        document.getElementById("resultado").textContent = "⚠️ Por favor ingresa valores válidos y mayores a 0.";
-        return;
-    }
+  const corriente = parseFloat(document.getElementById("corriente").value);
+  const longitud = parseFloat(document.getElementById("longitud").value);
+  const voltaje = parseFloat(document.getElementById("voltaje").value);
+  const material = document.getElementById("material").value;
+  const calibre = document.getElementById("calibre").value;
+  const fase = document.getElementById("fase").value;
 
-    // Fórmula de resistencia: R = ρ * (L / A)
-    // ⚡ Nota: Si el usuario solo ingresa la longitud de ida, multiplicar por 2:
-    const R = resistividad * (longitudConductor / area);
+  if (isNaN(corriente) || isNaN(longitud) || isNaN(voltaje) ||
+      corriente <= 0 || longitud <= 0 || voltaje <= 0) {
+    document.getElementById("resultado").textContent =
+      "⚠️ Ingresa valores válidos mayores a 0.";
+    return;
+  }
 
-    // Caída de tensión Vd = I * R
-    const Vd = corrienteAmperes * R;
-    const porcentaje = (Vd / voltajeVolts) * 100;
+  // Tabla de áreas (mm²)
+  const areas = {
+  "20": 0.52, "18": 0.82, "16": 1.31, "14": 2.08,
+  "12": 3.31, "10": 5.26, "8": 8.37, "6": 13.3,
+  "4": 21.1, "2": 33.6, "1": 42.4, "0": 53.5,
+  "00": 67.4, "000": 85, "0000": 107
+};
 
-    // Resultado
-    document.getElementById("resultado").innerHTML =
-        `Caída de tensión: <strong>${Vd.toFixed(2)} V</strong> 
-        (${porcentaje.toFixed(2)} % del voltaje nominal)`;
-});
+  const area = (areas[calibre] || 0) / 1e6; // mm² → m²
+
+  let rho = resistividadCobre;
+  if (material === "Aluminio") rho = resistividadAluminio;
+  if (material === "Alucobre") rho = resistividadAlucobre;
+
+  const R = rho * (longitud * 2 / area); // ida y vuelta
+  const Vd = corriente * R;
+  const porcentaje = (Vd / voltaje) * 100;
+  const salida = voltaje - Vd;
+
+  document.getElementById("resultado").innerHTML =
+    `<strong>Caída:</strong> ${Vd.toFixed(2)} V (${porcentaje.toFixed(2)} %)`;
+  document.getElementById("salida").innerHTML =
+    `<strong>Voltaje en carga:</strong> ${salida.toFixed(2)} V`;
+  document.getElementById("recomendacion").innerHTML =
+    porcentaje > 3
+      ? "⚠️ La caída supera el 3 %, considera un calibre mayor."
+      : "✅ La caída está dentro del límite permitido (≤3 %).";
+}
+
+// =================== RECOMENDACIÓN DE CALIBRE ===================
+function calcularRecomendacion() {
+  const corriente = parseFloat(document.getElementById("rec-corriente").value);
+  const longitud = parseFloat(document.getElementById("rec-longitud").value);
+  const voltaje = parseFloat(document.getElementById("rec-voltaje").value);
+
+  if (isNaN(corriente) || isNaN(longitud) || isNaN(voltaje) ||
+      corriente <= 0 || longitud <= 0 || voltaje <= 0) {
+    document.getElementById("recomendacion-cobre").textContent =
+      "⚠️ Ingresa valores válidos mayores a 0.";
+    return;
+  }
+
+  // Tabla simplificada (puedes refinarla con tus valores exactos)
+  const calibres = [
+    { awg: 12, amp: 20 },
+    { awg: 10, amp: 30 },
+    { awg: 8, amp: 40 },
+    { awg: 6, amp: 55 },
+    { awg: 4, amp: 70 },
+    { awg: 2, amp: 95 },
+    { awg: 1, amp: 110 },
+    { awg: 0, amp: 125 },
+    { awg: "00", amp: 145 },
+    { awg: "000", amp: 165 },
+    { awg: "0000", amp: 195 }
+  ];
+
+  const recomendado = calibres.find(c => corriente <= c.amp);
+  const cobre = recomendado ? recomendado.awg : "0000";
+  const aluminio = recomendado ? recomendado.awg + 1 : "0000";
+
+  document.getElementById("recomendacion-cobre").textContent =
+    `Cobre: calibre ${cobre} AWG`;
+  document.getElementById("recomendacion-aluminio").textContent =
+    `Aluminio: calibre ${aluminio} AWG (≈ equivalente)`;
+}
 
 // =================== TABS ===================
 const tabButtons = document.querySelectorAll(".tab-btn");
-tabButtons.forEach(btn => {
-    btn.addEventListener("click", function () {
-        document.querySelectorAll(".tab-content").forEach(tab => tab.style.display = "none");
-        document.getElementById(this.dataset.tab).style.display = "block";
-        tabButtons.forEach(b => b.classList.remove("active"));
-        this.classList.add("active");
-    });
-});
-// Activa la pestaña inicial
-document.querySelector(".tab-btn[data-tab='recomendaciones']").classList.add("active");
-document.getElementById("recomendaciones").style.display = "block";
+const tabSections = document.querySelectorAll(".tab-section");
 
-// =================== ACORDEÓN ===================
-document.querySelectorAll(".accordion-btn").forEach(btn => {
-    btn.addEventListener("click", function () {
-        this.classList.toggle("active");
-        const content = this.nextElementSibling;
-        content.style.display = (content.style.display === "block") ? "none" : "block";
+tabButtons.forEach(btn => {
+  btn.addEventListener("click", function () {
+    tabButtons.forEach(b => b.classList.remove("active"));
+    this.classList.add("active");
+
+    tabSections.forEach(section => {
+      section.style.display = section.id === this.dataset.tab ? "block" : "none";
     });
+  });
+});
+
+// Mostrar solo la primera pestaña al inicio
+tabSections.forEach((s, i) => (s.style.display = i === 0 ? "block" : "none"));
+
+// =================== ACORDEONES (DEFINICIONES) ===================
+document.querySelectorAll(".accordion-btn").forEach(button => {
+  button.addEventListener("click", () => {
+    const content = button.nextElementSibling;
+    const isOpen = content.style.display === "block";
+    document.querySelectorAll(".accordion-content").forEach(c => c.style.display = "none");
+    content.style.display = isOpen ? "none" : "block";
+  });
 });
 
 // =================== MODAL ===================
+// (Deja este bloque si planeas usarlo después)
 const modal = document.getElementById("modal");
-const modalText = document.getElementById("modal-text");
-const closeBtn = document.getElementById("close-modal");
+if (modal) {
+  const modalText = document.getElementById("modal-text");
+  const closeBtn = document.getElementById("close-modal");
 
-document.querySelectorAll(".modal-link").forEach(link => {
+  document.querySelectorAll(".modal-link").forEach(link => {
     link.addEventListener("click", function () {
-        modalText.textContent = this.dataset.text;
-        modal.style.display = "block";
+      modalText.textContent = this.dataset.text;
+      modal.style.display = "block";
     });
-});
+  });
 
-closeBtn.addEventListener("click", () => modal.style.display = "none");
-window.addEventListener("click", e => {
+  closeBtn?.addEventListener("click", () => modal.style.display = "none");
+  window.addEventListener("click", e => {
     if (e.target === modal) modal.style.display = "none";
-});
-
-// Ocultar todos los paneles de acordeón al iniciar
-const panels = document.querySelectorAll(".sub-panel");
-panels.forEach(panel => {
-  panel.style.display = "none";
-});
+  });
+}
 
 const mainAcc = document.querySelectorAll(".accordion-btn:not(.sub)");
 mainAcc.forEach(btn => {
