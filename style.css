@@ -1,8 +1,20 @@
+/* --- Variables --- */
+:root {
+  --bg-dark: #121212;
+  --bg-container: #1e1e1e;
+  --bg-input: #2c2c2c;
+  --color-text: #e0e0e0;
+  --color-accent: #90caf9;
+  --color-accent-hover: #64b5f6;
+  --color-subtext: #bbb;
+  --border-radius: 12px;
+}
+
 /* --- Estilos generales --- */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: #121212;
-  color: #e0e0e0;
+  background: var(--bg-dark);
+  color: var(--color-text);
   margin: 0;
   padding: 0;
 }
@@ -11,70 +23,72 @@ body {
   max-width: 500px;
   margin: 40px auto;
   padding: 20px;
-  background: #1e1e1e;
+  background: var(--bg-container);
   border-radius: 16px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+}
+
+h1, h2 {
+  margin-bottom: 10px;
 }
 
 h1 {
   text-align: center;
   font-size: 1.8rem;
   margin-bottom: 20px;
-  color: #90caf9;
+  color: var(--color-accent);
 }
 
 h2 {
-  margin-bottom: 10px;
   color: #bbdefb;
   font-size: 1.2rem;
 }
 
 label {
   display: block;
-  margin: 12px 0;
+  margin: 12px 0 6px;
   font-size: 0.95rem;
 }
 
-input, select {
+input, select, button {
   width: 100%;
-  padding: 10px;
-  margin-top: 6px;
   border: none;
-  border-radius: 12px;
-  background: #2c2c2c;
-  color: #fff;
+  border-radius: var(--border-radius);
   font-size: 1rem;
   outline: none;
 }
 
+input, select {
+  padding: 10px;
+  margin-top: 6px;
+  background: var(--bg-input);
+  color: #fff;
+}
+
 input:focus, select:focus {
-  box-shadow: 0 0 6px #90caf9;
+  box-shadow: 0 0 6px var(--color-accent);
 }
 
 button {
-  width: 100%;
   padding: 12px;
   margin-top: 20px;
-  background: #90caf9;
-  color: #121212;
-  border: none;
+  background: var(--color-accent);
+  color: var(--bg-dark);
   cursor: pointer;
-  border-radius: 16px;
-  font-size: 1.1rem;
   font-weight: bold;
   transition: 0.3s;
 }
 
 button:hover {
-  background: #64b5f6;
+  background: var(--color-accent-hover);
 }
 
 /* --- Resultados --- */
 .result-section {
   margin-top: 20px;
   padding: 15px;
-  border-radius: 12px;
-  background: #2c2c2c;
+  border-radius: var(--border-radius);
+  background: var(--bg-input);
 }
 
 .result-section p {
@@ -90,24 +104,23 @@ button:hover {
   text-align: left;
   padding: 12px;
   margin: 4px 0;
-  border: none;
-  outline: none;
-  background: #2c2c2c;
-  color: #e0e0e0;
-  border-radius: 12px;
+  background: var(--bg-input);
+  color: var(--color-text);
+  border-radius: var(--border-radius);
   font-size: 1rem;
   transition: 0.3s;
 }
 
 .accordion-btn:hover,
 .accordion-btn.active {
-  background: #90caf9;
-  color: #121212;
+  background: var(--color-accent);
+  color: var(--bg-dark);
 }
 
 .sub-panel {
   display: none;
 }
+
 .sub-panel.active {
   display: block;
 }
@@ -126,6 +139,7 @@ button:hover {
   height: 100%;
   background: rgba(0,0,0,0.8);
   color: #fff;
+  display: flex;
   justify-content: center;
   align-items: center;
   padding: 20px;
@@ -134,8 +148,8 @@ button:hover {
 }
 
 #concept-modal div {
-  background: #1e1e1e;
-  border-radius: 12px;
+  background: var(--bg-container);
+  border-radius: var(--border-radius);
   padding: 20px;
   max-width: 600px;
   width: 90%;
@@ -144,10 +158,10 @@ button:hover {
 #concept-modal button {
   margin-top: 10px;
   padding: 8px 12px;
-  border-radius: 12px;
+  border-radius: var(--border-radius);
   border: none;
-  background: #90caf9;
-  color: #121212;
+  background: var(--color-accent);
+  color: var(--bg-dark);
   cursor: pointer;
   font-weight: bold;
 }
@@ -156,16 +170,16 @@ button:hover {
 .footer {
   margin-top: 30px;
   padding: 20px;
-  background: #1e1e1e;
-  border-radius: 12px;
-  color: #bbb;
+  background: var(--bg-container);
+  border-radius: var(--border-radius);
+  color: var(--color-subtext);
   font-size: 0.85rem;
   text-align: center;
   line-height: 1.5;
 }
 
 .footer h3 {
-  color: #90caf9;
+  color: var(--color-accent);
   margin-bottom: 12px;
   font-size: 1.1rem;
 }
@@ -174,23 +188,22 @@ button:hover {
   margin: 8px 0;
 }
 
+/* --- Tabs --- */
 .tab-section,
 .tab-content {
-  display: none;   /* Ocultar todo al inicio */
+  display: none;
 }
 
-/* Contenedor de los botones de la barra de navegación */
 .tabs {
-  display: flex;              /* Coloca los elementos en una fila */
-  justify-content: center;     /* Opcional: centra los botones */
-  gap: 10px;                   /* Espacio entre botones */
-  background: #1e1e1e;         /* Color de fondo opcional */
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  background: var(--bg-container);
   padding: 10px;
 }
 
-/* Botones individuales */
 .tabs .tab-btn {
-  display: inline-block;       /* Asegura que no se estiren en bloque */
+  display: inline-block;
   padding: 10px 20px;
   color: #fff;
   background: #333;
@@ -200,62 +213,143 @@ button:hover {
 }
 
 .tabs .tab-btn.active {
-  background: #555;            /* Color cuando está seleccionada */
+  background: #555;
 }
-
 
 /* --- Responsivo --- */
 @media (max-width: 768px) {
-  .container {
-    max-width: 95%;
-    padding: 15px;
-  }
-
-  h1 {
-    font-size: 1.5rem;
-  }
-
-  h2 {
-    font-size: 1.1rem;
-  }
-
-  .tabs {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .tab-btn {
-    width: 100%;
-    margin: 0;
-  }
-
-  input, select, button {
-    font-size: 1rem;
-    padding: 10px;
-  }
-
-  .accordion-btn {
-    font-size: 0.95rem;
-    padding: 10px;
-  }
-
-  .sub-panel {
-    padding: 8px 12px;
-  }
+  .container { max-width: 95%; padding: 15px; }
+  h1 { font-size: 1.5rem; }
+  h2 { font-size: 1.1rem; }
+  .tabs { flex-direction: column; gap: 10px; }
+  .tab-btn { width: 100%; margin: 0; }
+  input, select, button, .accordion-btn { font-size: 1rem; padding: 10px; }
+  .sub-panel { padding: 8px 12px; }
 }
 
 @media (max-width: 480px) {
-  h1 {
-    font-size: 1.3rem;
-  }
+  h1 { font-size: 1.3rem; }
+  h2 { font-size: 1rem; }
+  label, input, select, button { font-size: 0.9rem; padding: 8px; }
+  .accordion-btn { font-size: 0.95rem; padding: 10px; }
+}
 
-  h2 {
+.level-accordion .accordion-btn {
+    background: #2c2c2c;
+    color: #e0e0e0;
     font-size: 1rem;
-  }
+    padding: 12px;
+    margin: 6px 0;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    text-align: left;
+    transition: 0.3s;
+}
 
-  label {
+.level-accordion .accordion-btn:hover,
+.level-accordion .accordion-btn.active {
+    background: #90caf9;
+    color: #121212;
+}
+
+.level-accordion .accordion-content {
+    display: none;
+    padding: 10px 20px;
+    margin-bottom: 8px;
+    background: #1e1e1e;
+    border-radius: 12px;
+}
+
+.level-accordion .accordion-content ul {
+    list-style-type: disc;
+    margin-left: 20px;
+    padding-left: 10px;
+}
+
+.level-accordion .accordion-content ul li {
+    margin: 6px 0;
+    color: #e3f2fd;
+    line-height: 1.4;
+}
+
+/* Listas anidadas dentro de conceptos */
+.level-accordion .accordion-content ul ul {
+    list-style-type: circle; /* cambiar viñeta para subniveles */
+    margin-left: 20px;
+}
+
+.level-accordion .accordion-content ul ul li {
+    color: #cfe8fc; /* un tono más claro para subniveles */
+    margin: 4px 0;
+}
+
+/* Sub-accordion */
+.sub-accordion-btn {
+    background: #3a3a3a;
+    color: #e0e0e0;
+    font-size: 0.95rem;
+    padding: 10px;
+    margin: 6px 0 0 0;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    text-align: left;
+    transition: 0.3s;
+}
+
+.sub-accordion-btn:hover,
+.sub-accordion-btn.active {
+    background: #64b5f6;
+    color: #121212;
+}
+
+.sub-accordion-content {
+    display: none;
+    padding: 8px 16px;
+    margin-bottom: 6px;
+    background: #2c2c2c;
+    border-radius: 12px;
+    color: #cfe8fc;
+}
+
+.sub-accordion-content p {
+    margin: 6px 0;
+}
+
+/* Mini sub-accordion dentro de un sub-accordion */
+.mini-sub-accordion-btn {
+    background: #4a4a4a;
+    color: #e0e0e0;
     font-size: 0.9rem;
-  }
+    padding: 8px;
+    margin: 4px 0 0 12px; /* indentado dentro del sub-accordion */
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: left;
+    transition: 0.3s;
+}
+
+.mini-sub-accordion-btn:hover,
+.mini-sub-accordion-btn.active {
+    background: #42a5f5;
+    color: #121212;
+}
+
+.mini-sub-accordion-content {
+    display: none;
+    padding: 6px 16px;
+    margin-bottom: 4px;
+    background: #3a3a3a;
+    border-radius: 10px;
+    color: #cfe8fc;
+}
+
+.mini-sub-accordion-content p {
+    margin: 4px 0;
+    font-size: 0.9rem;
+}
 
   input, select, button {
     font-size: 0.9rem;
