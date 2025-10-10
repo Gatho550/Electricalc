@@ -52,37 +52,62 @@ function calcularRecomendacion() {
   const corriente = parseFloat(document.getElementById("rec-corriente").value);
   const longitud = parseFloat(document.getElementById("rec-longitud").value);
   const voltaje = parseFloat(document.getElementById("rec-voltaje").value);
+  const maxCaida = 0.03; // 3% caída máxima
 
   if (isNaN(corriente) || isNaN(longitud) || isNaN(voltaje) ||
       corriente <= 0 || longitud <= 0 || voltaje <= 0) {
     document.getElementById("recomendacion-cobre").textContent =
       "⚠️ Ingresa valores válidos mayores a 0.";
+    document.getElementById("recomendacion-aluminio").textContent = "";
     return;
   }
 
-  // Tabla simplificada (puedes refinarla con tus valores exactos)
+  // Tabla de resistencias aproximadas (Ω/km)
   const calibres = [
-    { awg: 12, amp: 20 },
-    { awg: 10, amp: 30 },
-    { awg: 8, amp: 40 },
-    { awg: 6, amp: 55 },
-    { awg: 4, amp: 70 },
-    { awg: 2, amp: 95 },
-    { awg: 1, amp: 110 },
-    { awg: 0, amp: 125 },
-    { awg: "00", amp: 145 },
-    { awg: "000", amp: 165 },
-    { awg: "0000", amp: 195 }
+    { awg: 12, cobre: 5.21, aluminio: 8.37 },
+    { awg: 10, cobre: 3.28, aluminio: 5.27 },
+    { awg: 8,  cobre: 2.07, aluminio: 3.34 },
+    { awg: 6,  cobre: 1.30, aluminio: 2.11 },
+    { awg: 4,  cobre: 0.82, aluminio: 1.33 },
+    { awg: 2,  cobre: 0.52, aluminio: 0.84 },
+    { awg: 1,  cobre: 0.41, aluminio: 0.66 },
+    { awg: 0,  cobre: 0.33, aluminio: 0.53 },
+    { awg: "00", cobre: 0.26, aluminio: 0.42 },
+    { awg: "000", cobre: 0.21, aluminio: 0.34 },
+    { awg: "0000", cobre: 0.16, aluminio: 0.27 }
   ];
 
-  const recomendado = calibres.find(c => corriente <= c.amp);
-  const cobre = recomendado ? recomendado.awg : "0000";
-  const aluminio = recomendado ? recomendado.awg + 1 : "0000";
+  let cobreSeleccionado = null;
+  let aluminioSeleccionado = null;
+
+  // Longitud total ida y vuelta
+  const L = longitud * 2;
+
+  for (let i = 0; i < calibres.length; i++) {
+    const resistenciaCobre = (calibres[i].cobre * L) / 1000; // Ω
+    const resistenciaAlu   = (calibres[i].aluminio * L) / 1000; // Ω
+
+    const caidaCobre = resistenciaCobre * corriente;
+    const caidaAlu   = resistenciaAlu * corriente;
+
+    if (!cobreSeleccionado && (caidaCobre / voltaje) <= maxCaida) {
+      cobreSeleccionado = calibres[i].awg;
+    }
+
+    if (!aluminioSeleccionado && (caidaAlu / voltaje) <= maxCaida) {
+      aluminioSeleccionado = calibres[i].awg;
+    }
+
+    if (cobreSeleccionado && aluminioSeleccionado) break;
+  }
+
+  if (!cobreSeleccionado) cobreSeleccionado = "0000+";
+  if (!aluminioSeleccionado) aluminioSeleccionado = "0000+";
 
   document.getElementById("recomendacion-cobre").textContent =
-    `Cobre: calibre ${cobre} AWG`;
+    `Cobre: calibre ${cobreSeleccionado} AWG`;
   document.getElementById("recomendacion-aluminio").textContent =
-    `Aluminio: calibre ${aluminio} AWG (≈ equivalente)`;
+    `Aluminio: calibre ${aluminioSeleccionado} AWG (≈ equivalente)`;
 }
 
 // =================== TABS ===================
