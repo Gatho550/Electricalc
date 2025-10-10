@@ -103,71 +103,14 @@ tabButtons.forEach(btn => {
 // Mostrar solo la primera pestaña al inicio
 tabSections.forEach((s, i) => (s.style.display = i === 0 ? "block" : "none"));
 
-// --- Accordion principal: solo un nivel abierto a la vez ---
-document.querySelectorAll('.level-accordion .accordion-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-        const content = btn.nextElementSibling;
-
-        // Cerrar todos los demás niveles
-        document.querySelectorAll('.level-accordion .accordion-content').forEach(c => {
-            if (c !== content) c.style.display = 'none';
-        });
-
-        // Quitar clase active de todos los botones menos el actual
-        document.querySelectorAll('.level-accordion .accordion-btn').forEach(b => {
-            if (b !== btn) b.classList.remove('active');
-        });
-
-        // Alternar el actual
-        content.style.display = content.style.display === 'block' ? 'none' : 'block';
-        btn.classList.toggle('active');
-    });
-});
-
-// --- Sub-accordion: solo un concepto abierto dentro de su nivel ---
-document.querySelectorAll('.sub-accordion-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-        const content = btn.nextElementSibling;
-
-        // Encontrar el contenedor del nivel padre
-        const parent = btn.parentElement;
-
-        // Cerrar todos los demás sub-accordion dentro del mismo nivel
-        parent.querySelectorAll('.sub-accordion-content').forEach(c => {
-            if (c !== content) c.style.display = 'none';
-        });
-
-        // Quitar clase active de los demás botones dentro del mismo nivel
-        parent.querySelectorAll('.sub-accordion-btn').forEach(b => {
-            if (b !== btn) b.classList.remove('active');
-        });
-
-        // Alternar el actual
-        content.style.display = content.style.display === 'block' ? 'none' : 'block';
-        btn.classList.toggle('active');
-    });
-});
-
-// Mini sub-accordion: solo un ítem abierto dentro de su sub-accordion
-document.querySelectorAll('.mini-sub-accordion-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-        const content = btn.nextElementSibling;
-        const parent = btn.parentElement; // sub-accordion-content del nivel
-
-        // Cerrar los demás mini-sub dentro del mismo sub-accordion
-        parent.querySelectorAll('.mini-sub-accordion-content').forEach(c => {
-            if (c !== content) c.style.display = 'none';
-        });
-
-        // Quitar clase active de los demás botones
-        parent.querySelectorAll('.mini-sub-accordion-btn').forEach(b => {
-            if (b !== btn) b.classList.remove('active');
-        });
-
-        // Alternar el actual
-        content.style.display = content.style.display === 'block' ? 'none' : 'block';
-        btn.classList.toggle('active');
-    });
+// =================== ACORDEONES (DEFINICIONES) ===================
+document.querySelectorAll(".accordion-btn").forEach(button => {
+  button.addEventListener("click", () => {
+    const content = button.nextElementSibling;
+    const isOpen = content.style.display === "block";
+    document.querySelectorAll(".accordion-content").forEach(c => c.style.display = "none");
+    content.style.display = isOpen ? "none" : "block";
+  });
 });
 
 // =================== MODAL ===================
@@ -190,11 +133,6 @@ if (modal) {
   });
 }
 
-const mainAcc = document.querySelectorAll(".accordion-btn:not(.sub)");
-mainAcc.forEach(btn => {
-  const panel = btn.nextElementSibling;
-  panel.style.display = "none";
-});
 const mainAcc = document.querySelectorAll(".accordion-btn:not(.sub)");
 mainAcc.forEach(btn => {
   const panel = btn.nextElementSibling;
