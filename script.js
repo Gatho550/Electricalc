@@ -2,7 +2,6 @@
 function calcularCaida() {
   const resistividadCobre = 1.72e-8;
   const resistividadAluminio = 2.82e-8;
-  const resistividadAlucobre = 2.1e-8;
 
   const corriente = parseFloat(document.getElementById("corriente").value);
   const longitud = parseFloat(document.getElementById("longitud").value);
@@ -20,31 +19,43 @@ function calcularCaida() {
 
   // Tabla de áreas (mm²)
   const areas = {
-  "20": 0.52, "18": 0.82, "16": 1.31, "14": 2.08,
-  "12": 3.31, "10": 5.26, "8": 8.37, "6": 13.3,
-  "4": 21.1, "2": 33.6, "1": 42.4, "0": 53.5,
-  "00": 67.4, "000": 85, "0000": 107
-};
+    "14": 2.08, "12": 3.31, "10": 5.26,
+    "8": 8.37, "6": 13.3, "4": 21.1,
+    "2": 33.6, "1": 42.4, "0": 53.5,
+    "00": 67.4, "000": 85, "0000": 107,
+    "250": 127, "500": 253, "750": 380,
+    "1000": 507, "1250": 633, "1500": 760
+  };
 
-  const area = (areas[calibre] || 0) / 1e6; // mm² → m²
+    if (!areas[calibre]) {
+    document.getElementById("resultado").textContent = "⚠️ Calibre no válido o no especificado.";
+    return;
+  }
+  
+  const area = areas[calibre] * 1e-6; // mm² → m²
 
   let rho = resistividadCobre;
   if (material === "Aluminio") rho = resistividadAluminio;
-  if (material === "Alucobre") rho = resistividadAlucobre;
 
-  const R = rho * (longitud * 2 / area); // ida y vuelta
+    // Factor según tipo de sistema
+  let factor = 2; // monofásico/bifásico
+  if (fase.includes("Trifásico")) factor = Math.sqrt(3);
+
+  const R = rho * (longitud * factor / area);
   const Vd = corriente * R;
   const porcentaje = (Vd / voltaje) * 100;
   const salida = voltaje - Vd;
 
+  const format = num => num.toLocaleString("es-MX", { maximumFractionDigits: 2 });
+
   document.getElementById("resultado").innerHTML =
-    `<strong>Caída:</strong> ${Vd.toFixed(2)} V (${porcentaje.toFixed(2)} %)`;
+    `<strong>Caída:</strong> ${format(Vd)} V (${format(porcentaje)} %)`;
   document.getElementById("salida").innerHTML =
-    `<strong>Voltaje en carga:</strong> ${salida.toFixed(2)} V`;
+    `<strong>Voltaje en carga:</strong> ${format(salida)} V`;
   document.getElementById("recomendacion").innerHTML =
     porcentaje > 3
       ? "⚠️ La caída supera el 3 %, considera un calibre mayor."
-      : "✅ La caída está dentro del límite permitido (≤3 %).";
+      : "✅ La caída está dentro del límite permitido (≤ 3 %).";
 }
 
 // =================== RECOMENDACIÓN DE CALIBRE ===================
