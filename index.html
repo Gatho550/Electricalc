@@ -23,9 +23,21 @@
       <label>Corriente (A): <input id="rec-corriente" type="number" step="any"></label>
       <label>Longitud (m): <input id="rec-longitud" type="number" step="any"></label>
       <label>Voltaje (V): <input id="rec-voltaje" type="number" step="any"></label>
+      <label>Sistema de fase:
+        <select id="fase-rec">
+          <option value="Monofásico">Monofásico</option>
+          <option value="Bifásico">Bifásico (Monofásico 240 V)</option>
+          <option value="Trifásico Y">Trifásico Estrella (Y)</option>
+          <option value="Trifásico Δ">Trifásico Delta (Δ)</option>
+        </select>
+      </label>
       <button onclick="calcularRecomendacion()">Calcular</button>
       <p id="recomendacion-cobre"></p>
+      <p id="resultado-rec-cobre"></p>
+      <p id="salida-rec-cobre"></p>
       <p id="recomendacion-aluminio"></p>
+      <p id="resultado-rec-alu"></p>
+      <p id="salida-rec-alu"></p>
     </div>
 
     <!-- Pestaña Calculadora -->
