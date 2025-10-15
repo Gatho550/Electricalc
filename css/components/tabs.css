@@ -1,0 +1,130 @@
+/* Sidebar deslizante */
+#sidebar {
+  position: fixed;       /* fijo en la pantalla */
+  top: 0;
+  left: -250px;          /* oculto por defecto */
+  width: 250px;
+  height: 100%;
+  background: #2c2c2c;
+  color: #e0e0e0;
+  padding: 60px 20px 20px; /* espacio arriba para el botón */
+  box-shadow: 2px 0 8px rgba(0,0,0,0.5);
+  border-radius: 0 12px 12px 0;
+  transition: left 0.3s ease;
+  z-index: 1000;
+}
+
+#sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+#sidebar ul li {
+  margin: 20px 0;
+}
+
+#sidebar ul li a {
+  color: #e0e0e0;
+  text-decoration: none;
+  font-size: 1rem;
+  display: block;
+}
+
+#sidebar ul li a:hover {
+  color: #64b5f6;
+}
+
+/* Mostrar sidebar */
+#sidebar.active {
+  left: 0;
+}
+
+/* Botón de menú */
+#menu-btn {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 1001;
+  width: 40px;
+  height: 40px;
+  background: #3a3a3a;
+  color: #e0e0e0;
+  font-size: 1.5rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.3s;
+}
+
+#menu-btn:hover {
+  background: #64b5f6;
+  color: #121212;
+}
+
+/* Contenedor y título */
+.container {
+  position: relative;
+  padding: 20px;
+}
+
+.container h1 {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 2rem;
+  color: #fff;
+}
+
+
+
+/* Menú lateral */
+.side-menu {
+  position: fixed;
+  top: 20px;
+  left: -220px;
+  width: 220px;
+  height: calc(100% - 40px);
+  background: #1e1e1e;
+  border-radius: 12px;
+  padding-top: 60px;
+  box-shadow: 2px 0 12px rgba(0,0,0,0.5);
+  transition: left 0.3s ease;
+  z-index: 1000;
+}
+
+.side-menu.open {
+  left: 20px;
+}
+
+/* Links del menú */
+.side-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.side-menu ul li {
+  margin: 12px 0;
+}
+
+.menu-link {
+  color: #cfe8fc;
+  text-decoration: none;
+  padding: 10px 16px;
+  display: block;
+  border-radius: 8px;
+  transition: 0.2s;
+}
+
+.menu-link:hover,
+.menu-link.active {
+  background: #64b5f6;
+  color: #121212;
+}
+
+/* Secciones */
+.tab-section {
+  display: none;
+}

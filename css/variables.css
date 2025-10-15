@@ -1,0 +1,10 @@
+:root {
+  --bg-dark: #121212;
+  --bg-container: #1e1e1e;
+  --bg-input: #2c2c2c;
+  --color-text: #e0e0e0;
+  --color-accent: #90caf9;
+  --color-accent-hover: #64b5f6;
+  --color-subtext: #bbb;
+  --border-radius: 12px;
+}

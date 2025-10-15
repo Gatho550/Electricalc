@@ -1,0 +1,16 @@
+@media (max-width: 768px) {
+  .container { max-width: 95%; padding: 15px; }
+  h1 { font-size: 1.5rem; }
+  h2 { font-size: 1.1rem; }
+  .tabs { flex-direction: column; gap: 10px; }
+  .tab-btn { width: 100%; margin: 0; }
+  input, select, button, .accordion-btn { font-size: 1rem; padding: 10px; }
+  .sub-panel { padding: 8px 12px; }
+}
+
+@media (max-width: 480px) {
+  h1 { font-size: 1.3rem; }
+  h2 { font-size: 1rem; }
+  label, input, select, button { font-size: 0.9rem; padding: 8px; }
+  .accordion-btn { font-size: 0.95rem; padding: 10px; }
+}

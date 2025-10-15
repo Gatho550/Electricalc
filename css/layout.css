@@ -1,0 +1,21 @@
+.container {
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 20px;
+  background: var(--bg-container);
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+}
+
+.result-section {
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: var(--border-radius);
+  background: var(--bg-input);
+}
+
+.result-section p {
+  margin: 10px 0;
+  font-size: 1rem;
+  color: #e3f2fd;
+}

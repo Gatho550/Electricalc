@@ -1,0 +1,118 @@
+/* --- Accordion principal --- */
+.level-accordion .accordion-btn {
+    background: #2c2c2c;
+    color: #e0e0e0;
+    font-size: 1rem;
+    padding: 12px;
+    margin: 6px 0;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    text-align: left;
+    transition: 0.3s;
+}
+
+.level-accordion .accordion-btn:hover,
+.level-accordion .accordion-btn.active {
+    background: #90caf9;
+    color: #121212;
+}
+
+.level-accordion .accordion-content {
+    display: none;
+    padding: 10px 20px;
+    margin-bottom: 8px;
+    background: #1e1e1e;
+    border-radius: 12px;
+}
+
+/* --- Listas dentro de un acordeón --- */
+.level-accordion .accordion-content ul {
+    list-style-type: disc;
+    margin-left: 20px;
+    padding-left: 10px;
+}
+
+.level-accordion .accordion-content ul li {
+    margin: 6px 0;
+    color: #e3f2fd;
+    line-height: 1.4;
+}
+
+/* --- Subniveles dentro de listas --- */
+.level-accordion .accordion-content ul ul {
+    list-style-type: circle; /* cambiar tipo de viñeta para subniveles */
+    margin-left: 20px;
+}
+
+.level-accordion .accordion-content ul ul li {
+    color: #cfe8fc; /* tono más claro para distinguir niveles */
+    margin: 4px 0;
+}
+
+/* --- Sub-accordion --- */
+.sub-accordion-btn {
+    background: #3a3a3a;
+    color: #e0e0e0;
+    font-size: 0.95rem;
+    padding: 10px;
+    margin: 6px 0 0 0;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    text-align: left;
+    transition: 0.3s;
+}
+
+.sub-accordion-btn:hover,
+.sub-accordion-btn.active {
+    background: #64b5f6;
+    color: #121212;
+}
+
+.sub-accordion-content {
+    display: none;
+    padding: 8px 16px;
+    margin-bottom: 6px;
+    background: #2c2c2c;
+    border-radius: 12px;
+    color: #cfe8fc;
+}
+
+.sub-accordion-content p {
+    margin: 6px 0;
+}
+
+/* --- Mini sub-accordion (tercer nivel) --- */
+.mini-sub-accordion-btn {
+    background: #4a4a4a;
+    color: #e0e0e0;
+    font-size: 0.9rem;
+    padding: 8px;
+    margin: 4px 0 0 12px; /* indentado dentro del sub-accordion */
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: left;
+    transition: 0.3s;
+}
+
+.mini-sub-accordion-btn:hover,
+.mini-sub-accordion-btn.active {
+    background: #42a5f5;
+    color: #121212;
+}
+
+.mini-sub-accordion-content {
+    display: none;
+    padding: 6px 16px;
+    margin-bottom: 4px;
+    background: #3a3a3a;
+    border-radius: 10px;
+    color: #cfe8fc;
+}
+
+.mini-sub-accordion-content p {
+    margin: 4px 0;
+    font-size: 0.9rem;
+}
